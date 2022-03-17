@@ -26,8 +26,6 @@ CREATE TABLE IF NOT EXISTS User (
 	gmail VARCHAR(10) NOT NULL PRIMARY KEY
 );
 
---18 types
-
 INSERT INTO Types VALUES('Normal')
 INSERT INTO Types VALUES('Fire')
 INSERT INTO Types VALUES('Water')
@@ -387,7 +385,7 @@ INSERT INTO has VALUES (101, 'Default', 'Electric')
 
 INSERT INTO Pokemon VALUES (101, 'Hisuian', 'Electrode', 1, 'https://img.pokemondb.net/artwork/electrode-hisuian.jpg', 60, 50, 80, 150, 70, 80);
 INSERT INTO EvolveFrom VALUES (101, 'Hisuian', 100, 'Hisuian');
---INSERT INTO egg_grp VALUES (101, 'Hisuian', 'Mineral')
+INSERT INTO egg_grp VALUES (101, 'Hisuian', 'Undiscovered')
 INSERT INTO has VALUES (101, 'Hisuian', 'Electric')
 INSERT INTO has VALUES (101, 'Hisuian', 'Grass')
 
