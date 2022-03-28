@@ -2,17 +2,42 @@
 require('connect-db.php');
 require('pokemon_db.php');
 
-$list_of_friends = getAllFriends();
+$list_of_pokemon = getAllPokemon();
+$team = getTeam();
 $friend_to_update = null;
+
+$gmail_to_add = 'testuser@gmail.com';
+$pokemon_to_add = null;
+$variance_to_add = null;
+
+$gmail_to_delete = null;
+$pokemon_to_delete = null;
+$variance_to_delete = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "AddTeam")
+    {
+      echo"$pokemon_to_add";
+      addTeam($gmail_to_add, $_POST['pokemon_to_add'], $_POST['variance_to_add']);
+      $list_of_pokemon = getAllPokemon();
+      $team = getTeam();
+    } 
+    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete Member")
+    {
+      echo"$pokemon_to_delete";
+      deleteTeam($_POST['gmail_to_delete'], $_POST['pokemon_to_delete'], $_POST['variance_to_delete']);
+      $list_of_pokemon = getAllPokemon();
+      $team = getTeam();
+    }
+    /*
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add")
     {  
       // If the button is clicked and its value is "Add" then call addFriend() function
 
       addFriend($_POST['name'], $_POST['major'], $_POST['year']);
-      $list_of_friends = getAllFriends();
+      $list_of_pokemon = getAllPokemon();
+      $team = getTeam();
     }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
     {  
@@ -30,14 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete")
     {
       deleteFriend($_POST['friend_to_delete']);
-      $list_of_friends = getAllFriends();
+      $list_of_pokemon = getAllPokemon();
+      $team = getTeam();
     }
 
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Confirm update")
     {
       updateFriend($_POST['name'], $_POST['major'], $_POST['year']);
-      $list_of_friends = getAllFriends();
+      $list_of_pokemon = getAllPokemon();
+      $team = getTeam();
     }
+    */
 }
 ?>
 
@@ -116,31 +144,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </form>    
 
 <hr/>
-<h2>List of Friends</h2>
+<h2>Teams</h2>
 <!-- <div class="row justify-content-center">   -->
 <table class="w3-table w3-bordered w3-card-4" style="width:90%">
   <thead>
   <tr style="background-color:#B0B0B0">
-    <th width="25%">Name</th>        
-    <th width="25%">Major</th>        
-    <th width="20%">Year</th> 
-    <th width="12%">Update ?</th>
+    <th width="25%">gmail</th>        
+    <th width="25%">natl_dex</th>
+    <th width="20%">variance</th> 
+    <th width="20%">Delete ?</th> 
+  </tr>
+  </thead>
+  <?php foreach ($team as $member): ?>
+  <tr>
+    <td><?php echo $member['gmail']; ?></td>
+    <td><?php echo $member['natl_dex']; ?></td>
+    <td><?php echo $member['variance']; ?></td>
+    <td>
+    <form action="simpleform.php" method="post">
+        <input type="submit" value="Delete Member" name="btnAction" class="btn btn-danger" />
+        <input type="hidden" name="gmail_to_delete" value="<?php echo $member['gmail'] ?>" />
+        <input type="hidden" name="pokemon_to_delete" value="<?php echo $member['natl_dex'] ?>" />
+        <input type="hidden" name="variance_to_delete" value="<?php echo $member['variance'] ?>" />     
+    </form>
+  </tr>
+  <?php endforeach; ?>
+
+  
+  </table>
+
+<hr/>
+<h2>List of Pokemon</h2>
+<!-- <div class="row justify-content-center">   -->
+<table class="w3-table w3-bordered w3-card-4" style="width:90%">
+  <thead>
+  <tr style="background-color:#B0B0B0">
+    <th width="25%">Name</th>
+    <th width="12%">Add To Team</th>
     <th width="12%">Delete ?</th> 
   </tr>
   </thead>
-  <?php foreach ($list_of_friends as $friend): ?>
+  <?php foreach ($list_of_pokemon as $pokemon): ?>
   <tr>
-    <td><?php echo $friend['name']; ?></td>
+    <td><?php echo $pokemon['name']; ?></td>
     <td>
       <form action="simpleform.php" method="post">
-        <input type="submit" value="Update" name="btnAction" class="btn btn-primary" />
-        <input type="hidden" name="friend_to_update" value="<?php echo $friend['name'] ?>" />      
+        <input type="submit" value="AddTeam" name="btnAction" class="btn btn-primary" />
+        <input type="hidden" name="pokemon_to_add" value="<?php echo $pokemon['natl_dex'] ?>"/>
+        <input type="hidden" name="variance_to_add" value="<?php echo $pokemon['variance'] ?>"/>
       </form>
     </td>
     <td>
     <form action="simpleform.php" method="post">
         <input type="submit" value="Delete" name="btnAction" class="btn btn-danger" />
-        <input type="hidden" name="friend_to_delete" value="<?php echo $friend['name'] ?>" />      
+        <input type="hidden" name="friend_to_delete" value="<?php echo $pokemon['name'] ?>" />      
       </form>
     </td> 
   </tr>
