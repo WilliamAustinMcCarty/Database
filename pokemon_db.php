@@ -6,16 +6,16 @@ function addFriend($name, $major, $year)
 	global $db;
 
 	// write sql
-	// insert into friends (name, major, year) values('someone', 'cs', 4)"; 
+	// insert into friends (name, major, year) values('someone', 'cs', 4)";
 	// or
 	// insert into friends values('someone', 'cs', 4)";
 
 // bad practice (but convenient)
 	// $query = "insert into friends values('" . $name . "', '" . $major . "'," . $year . ")";
 
-// good practice: use a prepared statement 
+// good practice: use a prepared statement
 // 1. prepare
-// 2. bindValue & execute	
+// 2. bindValue & execute
 	$query = "insert into friends values(:name, :major, :year)";
 
 	// execute the sql
@@ -28,7 +28,7 @@ function addFriend($name, $major, $year)
 
 	$statement->execute();
 
-	// release; free the connection to the server so other sql statements may be issued 
+	// release; free the connection to the server so other sql statements may be issued
 	$statement->closeCursor();
 }
 
@@ -39,7 +39,7 @@ function deleteTeam($gmail, $natl_dex, $variance)
     echo "deleting $gmail, $natl_dex, $variance";
 
     $query = "delete from chooseteam where (gmail=:gmail and natl_dex=:natl_dex and variance=:variance)";
-	$statement = $db->prepare($query); 
+	$statement = $db->prepare($query);
 	$statement->bindValue(':gmail', $gmail);
 	$statement->bindValue(':natl_dex', $natl_dex);
 	$statement->bindValue(':variance', $variance);
@@ -55,16 +55,16 @@ function addTeam($gmail, $natl_dex, $variance)
     echo "adding $gmail, $natl_dex, $variance";
 
 	// write sql
-	// insert into friends (name, major, year) values('someone', 'cs', 4)"; 
+	// insert into friends (name, major, year) values('someone', 'cs', 4)";
 	// or
 	// insert into friends values('someone', 'cs', 4)";
 
 // bad practice (but convenient)
 	// $query = "insert into friends values('" . $name . "', '" . $major . "'," . $year . ")";
 
-// good practice: use a prepared statement 
+// good practice: use a prepared statement
 // 1. prepare
-// 2. bindValue & execute	
+// 2. bindValue & execute
 	$query = "insert into chooseteam values(:gmail, :natl_dex, :variance)";
 
 	// execute the sql
@@ -77,7 +77,7 @@ function addTeam($gmail, $natl_dex, $variance)
 
 	$statement->execute();
 
-	// release; free the connection to the server so other sql statements may be issued 
+	// release; free the connection to the server so other sql statements may be issued
 	$statement->closeCursor();
 }
 
@@ -86,17 +86,17 @@ function getAllPokemon()
 	global $db;
 	$query = "select * from pokemon";
 
-// bad	
-	// $statement = $db->query($query);     // 16-Mar, stopped here, still need to fetch and return the result 
-	
-// good: use a prepared stement 
+// bad
+	// $statement = $db->query($query);     // 16-Mar, stopped here, still need to fetch and return the result
+
+// good: use a prepared stement
 // 1. prepare
 // 2. bindValue & execute
 	$statement = $db->prepare($query);
 	$statement->execute();
 
 	// fetchAll() returns an array of all rows in the result set
-	$results = $statement->fetchAll();   
+	$results = $statement->fetchAll();
 
 	$statement->closeCursor();
 
@@ -108,17 +108,17 @@ function getTeam()
 	global $db;
 	$query = "select * from chooseteam";
 
-// bad	
-	// $statement = $db->query($query);     // 16-Mar, stopped here, still need to fetch and return the result 
-	
-// good: use a prepared stement 
+// bad
+	// $statement = $db->query($query);     // 16-Mar, stopped here, still need to fetch and return the result
+
+// good: use a prepared stement
 // 1. prepare
 // 2. bindValue & execute
 	$statement = $db->prepare($query);
 	$statement->execute();
 
 	// fetchAll() returns an array of all rows in the result set
-	$results = $statement->fetchAll();   
+	$results = $statement->fetchAll();
 
 	$statement->closeCursor();
 
@@ -130,7 +130,7 @@ function getFriend_byName($name)
 	global $db;
 	$query = "select * from friends where name = :name";
 	// "select * from friends where name = $name";
-	
+
 // 1. prepare
 // 2. bindValue & execute
 	$statement = $db->prepare($query);
@@ -138,18 +138,18 @@ function getFriend_byName($name)
 	$statement->execute();
 
 	// fetch() returns a row
-	$results = $statement->fetch();   
+	$results = $statement->fetch();
 
 	$statement->closeCursor();
 
-	return $results;	
+	return $results;
 }
 
 function updateFriend($name, $major, $year)
 {
 	global $db;
 	$query = "update friends set major=:major, year=:year where name=:name";
-	$statement = $db->prepare($query); 
+	$statement = $db->prepare($query);
 	$statement->bindValue(':major', $major);
 	$statement->bindValue(':year', $year);
 	$statement->bindValue(':name', $name);
@@ -161,9 +161,27 @@ function deleteFriend($name)
 {
 	global $db;
 	$query = "delete from friends where name=:name";
-	$statement = $db->prepare($query); 
+	$statement = $db->prepare($query);
 	$statement->bindValue(':name', $name);
 	$statement->execute();
 	$statement->closeCursor();
 }
+
+
+function orderBy($order)
+{
+	global $db;
+	$query = 'select * from pokemon ORDER BY '.$order;
+
+
+	$statement = $db->prepare($query);
+	$statement->execute();
+
+	$results = $statement->fetchAll();
+
+	$statement->closeCursor();
+
+	return $results;
+}
+
 ?>

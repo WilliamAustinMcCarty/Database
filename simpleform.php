@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       addTeam($gmail_to_add, $_POST['pokemon_to_add'], $_POST['variance_to_add']);
       $list_of_pokemon = getAllPokemon();
       $team = getTeam();
-    } 
+    }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete Member")
     {
       echo"$pokemon_to_delete";
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
     /*
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add")
-    {  
+    {
       // If the button is clicked and its value is "Add" then call addFriend() function
 
       addFriend($_POST['name'], $_POST['major'], $_POST['year']);
@@ -40,16 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       $team = getTeam();
     }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
-    {  
+    {
       // echo "Update --->" .  $_POST['friend_to_update'] ;
       // If the button is clicked and its value is "Update" then retrieve info about that friend.
       // We'll later fill in the friend's info in the form so that a user can update the info.
-       
+
       $friend_to_update = getFriend_byName($_POST['friend_to_update']);
 
       // To fill in the form, assign the pieces of info to the value attributes of form input textboxes.
-      // Then, we'll wait until a user makes some changes to the friend's info 
-      // and click the "Confirm update" button to actually make it reflect the database. 
+      // Then, we'll wait until a user makes some changes to the friend's info
+      // and click the "Confirm update" button to actually make it reflect the database.
       // (also note: "name" is a primary key -- refer to the friends table we created, thus can't be updated)
     }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete")
@@ -74,74 +74,74 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">  
-  
+  <meta charset="UTF-8">
+
   <!-- 2. include meta tag to ensure proper rendering and touch zooming -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- 
+  <!--
   Bootstrap is designed to be responsive to mobile.
   Mobile-first styles are part of the core framework.
-   
+
   width=device-width sets the width of the page to follow the screen-width
-  initial-scale=1 sets the initial zoom level when the page is first loaded   
+  initial-scale=1 sets the initial zoom level when the page is first loaded
   -->
-  
+
   <meta name="author" content="your name">
-  <meta name="description" content="include some description about your page">  
-    
+  <meta name="description" content="include some description about your page">
+
   <title>DB interfacing example</title>
-  
+
   <!-- 3. link bootstrap -->
-  <!-- if you choose to use CDN for CSS bootstrap -->  
+  <!-- if you choose to use CDN for CSS bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  
-  <!-- you may also use W3's formats -->
+
+  <!-- you may also use W3s formats -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  
-  <!-- 
+
+  <!--
   Use a link tag to link an external resource.
-  A rel (relationship) specifies relationship between the current document and the linked resource. 
+  A rel (relationship) specifies relationship between the current document and the linked resource.
   -->
-  
+
   <!-- If you choose to use a favicon, specify the destination of the resource in href -->
   <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
-  
+
   <!-- if you choose to download bootstrap and host it locally -->
-  <!-- <link rel="stylesheet" href="path-to-your-file/bootstrap.min.css" /> --> 
-  
+  <!-- <link rel="stylesheet" href="path-to-your-file/bootstrap.min.css" /> -->
+
   <!-- include your CSS -->
   <!-- <link rel="stylesheet" href="custom.css" />  -->
-       
+
 </head>
 
 <body>
 <div class="container">
-  <h1>Pokemon book</h1>  
+  <h1>Pokemon book</h1>
 
-  <form name="mainForm" action="simpleform.php" method="post">   
+  <form name="mainForm" action="simpleform.php" method="post">
   <div class="row mb-3 mx-3">
     Name:
-    <input type="text" class="form-control" name="name" required 
+    <input type="text" class="form-control" name="name" required
             value="<?php if ($friend_to_update!=null) echo $friend_to_update['name'] ?>"
-    />        
-  </div>  
+    />
+  </div>
   <div class="row mb-3 mx-3">
     Year:
-    <input type="number" class="form-control" name="year" required min="1" max="4" 
+    <input type="number" class="form-control" name="year" required min="1" max="4"
             value="<?php if ($friend_to_update!=null) echo $friend_to_update['year'] ?>"
-    /> 
-  </div>  
+    />
+  </div>
   <div class="row mb-3 mx-3">
     Major:
-    <input type="text" class="form-control" name="major" required 
+    <input type="text" class="form-control" name="major" required
             value="<?php if ($friend_to_update!=null) echo $friend_to_update['major'] ?>"
     />
-  </div>  
-  <input type="submit" value="Add" name="btnAction" class="btn btn-dark" 
-        title="insert a friend" />  
-  <input type="submit" value="Confirm update" name="btnAction" class="btn btn-dark" 
-        title="confirm update a friend" />  
-</form>    
+  </div>
+  <input type="submit" value="Add" name="btnAction" class="btn btn-dark"
+        title="insert a friend" />
+  <input type="submit" value="Confirm update" name="btnAction" class="btn btn-dark"
+        title="confirm update a friend" />
+</form>
 
 <hr/>
 <h2>Teams</h2>
@@ -149,10 +149,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <table class="w3-table w3-bordered w3-card-4" style="width:90%">
   <thead>
   <tr style="background-color:#B0B0B0">
-    <th width="25%">gmail</th>        
+    <th width="25%">gmail</th>
     <th width="25%">natl_dex</th>
-    <th width="20%">variance</th> 
-    <th width="20%">Delete ?</th> 
+    <th width="20%">variance</th>
+    <th width="20%">Delete ?</th>
   </tr>
   </thead>
   <?php foreach ($team as $member): ?>
@@ -165,12 +165,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         <input type="submit" value="Delete Member" name="btnAction" class="btn btn-danger" />
         <input type="hidden" name="gmail_to_delete" value="<?php echo $member['gmail'] ?>" />
         <input type="hidden" name="pokemon_to_delete" value="<?php echo $member['natl_dex'] ?>" />
-        <input type="hidden" name="variance_to_delete" value="<?php echo $member['variance'] ?>" />     
+        <input type="hidden" name="variance_to_delete" value="<?php echo $member['variance'] ?>" />
     </form>
   </tr>
   <?php endforeach; ?>
 
-  
+
   </table>
 
 <hr/>
@@ -179,14 +179,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <table class="w3-table w3-bordered w3-card-4" style="width:90%">
   <thead>
   <tr style="background-color:#B0B0B0">
-    <th width="25%">Name</th>
+    <th width="20%">Name</th>
+    <th width="10%">Variance</th>
     <th width="12%">Add To Team</th>
-    <th width="12%">Delete ?</th> 
+    <th width="12%">Delete ?</th>
   </tr>
   </thead>
   <?php foreach ($list_of_pokemon as $pokemon): ?>
   <tr>
+
     <td><?php echo $pokemon['name']; ?></td>
+    <td><?php echo $pokemon['variance']; ?></td>
     <td>
       <form action="simpleform.php" method="post">
         <input type="submit" value="AddTeam" name="btnAction" class="btn btn-primary" />
@@ -197,13 +200,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <td>
     <form action="simpleform.php" method="post">
         <input type="submit" value="Delete" name="btnAction" class="btn btn-danger" />
-        <input type="hidden" name="friend_to_delete" value="<?php echo $pokemon['name'] ?>" />      
+        <input type="hidden" name="friend_to_delete" value="<?php echo $pokemon['name'] ?>" />
       </form>
-    </td> 
+    </td>
   </tr>
   <?php endforeach; ?>
 
-  
+
   </table>
 <!-- </div>   -->
 
@@ -211,10 +214,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <!-- CDN for JS bootstrap -->
   <!-- you may also use JS bootstrap to make the page dynamic -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
-  
+
   <!-- for local -->
-  <!-- <script src="your-js-file.js"></script> -->  
-  
-</div>    
+  <!-- <script src="your-js-file.js"></script> -->
+
+</div>
 </body>
 </html>
