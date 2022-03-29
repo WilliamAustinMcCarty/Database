@@ -1,5 +1,5 @@
 <?php 
-session_start(); //for session tracking
+session_start(); //for session tracking, if you lose the session on a page, put this at the VERY TOP
 include ("pokemondbcontroller.php");
 
 $command="login"; //default command for pokemondbcontroller
@@ -8,94 +8,11 @@ if (isset($_GET["command"])){ //commands to be passed in by forms
   $command=$_GET["command"];
 }
 
-if(!isset($_SESSION["name"])){ //if not logged in, log-in command.
+if(!isset($_SESSION["gmail"])){ //if not logged in, log-in command.
   $command="login";
 }
 
 //initialize and start the controller
 $controller = new pokemondbcontroller($command);
 $controller->run();
-?>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">  
-  
-  <!-- 2. include meta tag to ensure proper rendering and touch zooming -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- 
-  Bootstrap is designed to be responsive to mobile.
-  Mobile-first styles are part of the core framework.
-   
-  width=device-width sets the width of the page to follow the screen-width
-  initial-scale=1 sets the initial zoom level when the page is first loaded   
-  -->
-  
-  <meta name="author" content="your name">
-  <meta name="description" content="include some description about your page">  
-    
-  <title>Bootstrap example</title>
-  
-  <!-- 3. link bootstrap -->
-  <!-- if you choose to use CDN for CSS bootstrap -->  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  
-  <!-- you may also use W3's formats -->
-  <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-  
-  <!-- 
-  Use a link tag to link an external resource.
-  A rel (relationship) specifies relationship between the current document and the linked resource. 
-  -->
-  
-  <!-- If you choose to use a favicon, specify the destination of the resource in href -->
-  <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
-  
-  <!-- if you choose to download bootstrap and host it locally -->
-  <!-- <link rel="stylesheet" href="path-to-your-file/bootstrap.min.css" /> --> 
-  
-  <!-- include your CSS -->
-  <!-- <link rel="stylesheet" href="custom.css" />  -->
-       
-</head>
-
-<body>
-<div class="container">
-  <h1>Log In User</h1>  
-
-  <a href="simpleform.php">[LOG IN]</a>
-  <!-- <a href="file:///C:/xampp/htdocs/CS4507-workin/simpleform.php">Click to open the next page</a> -->
-
-
-
-  <!-- CDN for JS bootstrap -->
-  <!-- you may also use JS bootstrap to make the page dynamic -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
-  
-  <!-- for local -->
-  <!-- <script src="your-js-file.js"></script> -->  
-  
-</div>
-
-<body>
-<div class="container">
-  <h1>View Pokemon</h1>  
-
-  <a href="poke.php">[View]</a>
-  <!-- <a href="file:///C:/xampp/htdocs/CS4507-workin/poke.php">Click to open the next page</a> -->
-
-
-
-  <!-- CDN for JS bootstrap -->
-  <!-- you may also use JS bootstrap to make the page dynamic -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
-  
-  <!-- for local -->
-  <!-- <script src="your-js-file.js"></script> -->  
-  
-</div>
-
- 
-</body>
-</html>

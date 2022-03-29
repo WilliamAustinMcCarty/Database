@@ -33,7 +33,7 @@ class Database{
         if (!$ret->execute()){ //if execute returns false there was a problem
             return false;
         }
-        $return = $ret->fetchAll();
+        $return = $ret->fetchAll(PDO::FETCH_ASSOC);
         $ret->closeCursor();
         return $return;
     }

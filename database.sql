@@ -1156,6 +1156,7 @@ INSERT INTO `Types` (`typeName`) VALUES
 
 CREATE TABLE IF NOT EXISTS `User` (
   `gmail` varchar(256) NOT NULL
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1336,6 +1337,9 @@ ALTER TABLE `Types`
 ALTER TABLE `User`
   ADD PRIMARY KEY (`gmail`);
 
+--added manually 3/29/2022, since we changed our login system. Make sure you have it!
+ALTER TABLE `User`
+  ADD `passwd` varchar(255); 
 --
 -- Indexes for table `votesFor`
 --

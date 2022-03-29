@@ -1,4 +1,6 @@
 <?php
+session_start();
+include("header.php");
 require('connect-db.php');
 require('pokemon_db.php');
 
@@ -6,7 +8,7 @@ $list_of_pokemon = getAllPokemon();
 $team = getTeam();
 $friend_to_update = null;
 
-$gmail_to_add = 'testuser@gmail.com';
+$gmail_to_add = $_SESSION["gmail"];
 $pokemon_to_add = null;
 $variance_to_add = null;
 
@@ -75,21 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <html>
 <head>
   <meta charset="UTF-8">
-
-  <!-- 2. include meta tag to ensure proper rendering and touch zooming -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--
-  Bootstrap is designed to be responsive to mobile.
-  Mobile-first styles are part of the core framework.
+  <meta name="author" content="Kevin Kowahl, William McCarthy, Justin Kier">
+  <meta name="description" content="User Page">
 
-  width=device-width sets the width of the page to follow the screen-width
-  initial-scale=1 sets the initial zoom level when the page is first loaded
-  -->
-
-  <meta name="author" content="your name">
-  <meta name="description" content="include some description about your page">
-
-  <title>DB interfacing example</title>
+  <title> Welcome! </title>
 
   <!-- 3. link bootstrap -->
   <!-- if you choose to use CDN for CSS bootstrap -->
@@ -116,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <body>
 <div class="container">
-  <h1>Pokemon book</h1>
+  <h1> Pokemon Book </h1>
 
   <form name="mainForm" action="simpleform.php" method="post">
   <div class="row mb-3 mx-3">

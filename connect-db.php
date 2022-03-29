@@ -62,6 +62,7 @@ $dsn = "mysql:host=$host;dbname=$dbname";
 /** connect to the database **/
 try 
 {
+   global $db;
    $db = new PDO($dsn, $username, $password);
    
    // dispaly a message to let us know that we are connected to the database 

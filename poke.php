@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('connect-db.php');
 require('pokemon_db.php');
 
@@ -9,7 +10,7 @@ require('pokemon_db.php');
 #	$list_of_pokemon = orderBy($order);
 #}
 #else {
-	$list_of_pokemon = getAllPokemon();
+	$list_of_pokemon = $_SESSION["pokemon"];
 #}
 
 $friend_to_update = null;
@@ -44,7 +45,7 @@ $variance_to_delete = null;
   <meta name="author" content="your name">
   <meta name="description" content="include some description about your page">
 
-  <title>DB interfacing example</title>
+  <title> Pokemon List </title>
 
   <!-- 3. link bootstrap -->
   <!-- if you choose to use CDN for CSS bootstrap -->
@@ -74,32 +75,33 @@ $variance_to_delete = null;
 <div class="container">
 <h1>Pokemon</h1>
 <!-- <div class="row justify-content-center">   -->
-<table id "myTable" class="w3-table w3-bordered w3-card-4" style="width:90%">
-  <thead>
-  <tr style="background-color:#B0B0B0">
-    <th width="5%"><a href="?orderBy=natl_dex">natl_dex</a>
-    </th>
-    <th width="10%"><a href="?orderBy=variance">variance</a>
-    </th>
-    <th width="20%"><a href="?orderBy=name">name</a>
-    </th>
-    <th width="5%"><a href="?orderBy=generation">generation</a>
-    </th>
-    <th width="25%">image</th>
-    <th width="8%"><a href="?orderBy=hp">hp</a>
-    </th>
-    <th width="8%"><a href="?orderBy=atk">atk</a>
-    </th>
-    <th width="8%"><a href="?orderBy=spAtk">spAtk</a>
-    </th>
-    <th width="8%"><a href="?orderBy=speed">speed</a>
-    </th>
-    <th width="8%"><a href="?orderBy=def">def</a>
-    </th>
-    <th width="8%"><a href="?orderBy=spDef">spDef</a>
-    </th>
-  </tr>
-  </thead>
+<form action="?command=pokeList" method="post">
+  <table id "myTable" class="w3-table w3-bordered w3-card-4" style="width:90%">
+    <thead>
+    <tr style="background-color:#B0B0B0">
+      <th width="5%"><input type="Submit" name="orderBy" value="natl_dex"/>
+      </th>
+      <th width="10%"><input type="Submit" name="orderBy" value="variance"/>
+      </th>
+      <th width="20%"><input type="Submit" name="orderBy" value="name"/>
+      </th>
+      <th width="5%"><input type="Submit" name="orderBy" value="generation"/>
+      </th>
+      <th width="25%">image</th>
+      <th width="8%"><input type="Submit" name="orderBy" value="hp"/>
+      </th>
+      <th width="8%"><input type="Submit" name="orderBy" value="atk"/>
+      </th>
+      <th width="8%"><input type="Submit" name="orderBy" value="spAtk"/>
+      </th>
+      <th width="8%"><input type="Submit" name="orderBy" value="speed"/>
+      </th>
+      <th width="8%"><input type="Submit" name="orderBy" value="def"/>
+      </th>
+      <th width="8%"><input type="Submit" name="orderBy" value="spDef"/>
+      </th>
+    </tr>
+    </thead>
 
 
   <?php foreach ($list_of_pokemon as $pokemon): ?>
@@ -120,6 +122,7 @@ $variance_to_delete = null;
   <?php endforeach; ?>
 
   </table>
+  </form>
 
 </div>
 </body>

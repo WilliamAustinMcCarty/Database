@@ -1,5 +1,4 @@
 <?php
-
 function addFriend($name, $major, $year)
 {
 	// db handler
