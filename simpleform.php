@@ -35,15 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete Member")
     {
       echo"trying to delete from $gmail_to_delete, $pokemon_to_delete, $variance_to_delete \n";
-      if($gmail_to_delete == $gmail_to_add){
         echo"$pokemon_to_delete";
         deleteTeam($_POST['gmail_to_delete'], $_POST['pokemon_to_delete'], $_POST['variance_to_delete']);
         $list_of_pokemon = getAllPokemon();
         $team = getTeam($gmail_to_add);
-      }
-      else{
-        echo"your email is $gmail_to_add, you tried to delete from $gmail_to_delete \n";
-      }
     }
 }
 ?>
