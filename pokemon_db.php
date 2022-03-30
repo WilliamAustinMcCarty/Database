@@ -102,10 +102,10 @@ function getAllPokemon()
 	return $results;
 }
 
-function getTeam()
+function getTeam($gmail)
 {
 	global $db;
-	$query = "select * from chooseteam";
+	$query = "select * from chooseteam where gmail=:gmail";
 
 // bad
 	// $statement = $db->query($query);     // 16-Mar, stopped here, still need to fetch and return the result
@@ -114,6 +114,7 @@ function getTeam()
 // 1. prepare
 // 2. bindValue & execute
 	$statement = $db->prepare($query);
+	$statement->bindValue(':gmail', $gmail);
 	$statement->execute();
 
 	// fetchAll() returns an array of all rows in the result set
