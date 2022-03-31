@@ -2256,6 +2256,9 @@ ALTER TABLE `types`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`gmail`);
 
+ALTER TABLE `User`
+  ADD `passwd` varchar(255); 
+
 --
 -- Indexes for table `votesfor`
 --
