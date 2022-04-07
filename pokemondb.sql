@@ -394,6 +394,8 @@ INSERT INTO `has` (`natl_dex`, `variance`, `type`) VALUES
 (2, 'Default', 'Poison'),
 (3, 'Default', 'Grass'),
 (3, 'Default', 'Poison'),
+(3, 'Mega', 'Grass'),
+(3, 'Mega', 'Grass'),
 (4, 'Default', 'Fire'),
 (5, 'Default', 'Fire'),
 (6, 'Default', 'Fire'),
