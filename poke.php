@@ -73,7 +73,8 @@ $asc = $_SESSION["asc"];
 <h1>Pokemon</h1>
 <!-- <div class="row justify-content-center">   -->
 <form action="?command=pokeList" method="post">
-  <table id "myTable" class="w3-table w3-bordered w3-card-4" style="width:90%">
+  <div style="overflow-y: scroll; height: 500px;">
+  <table id "myTable" class="w3-table w3-bordered w3-card-4 " style="width:90%;">
     <thead>
     <tr style="background-color:#B0B0B0">
       </form>
@@ -124,6 +125,7 @@ $asc = $_SESSION["asc"];
     </thead>
 
 
+
   <?php foreach ($list_of_pokemon as $pokemon): ?>
   <tr class ="item">
     <td><?php echo $pokemon['natl_dex']; ?></td>
@@ -149,7 +151,7 @@ $asc = $_SESSION["asc"];
     <form action="?command=pokeList" method="post">
   </tr>
   <?php endforeach; ?>
-
+    </div>
   </table>
   </form>
 
