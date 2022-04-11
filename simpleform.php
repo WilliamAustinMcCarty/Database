@@ -1,13 +1,12 @@
 <?php
-// if(!isset($_SESSION)) 
-// { 
-//     session_start(); 
-// }
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+}
 // var_dump($_SESSION);
 include("header.php");
 require('connect-db.php');
 require('pokemon_db.php');
-
 
 $gmail_to_add = $_SESSION["gmail"];
 
@@ -190,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       </form>
     </td>
     <td>
-      <?php echo getVotes($pokemon['name'], $pokemon['variance']);?>
+      <?php echo getVotes($pokemon['natl_dex'], $pokemon['variance']);?>
     </td>
     <td>
       <form action="simpleform.php" method="post">
