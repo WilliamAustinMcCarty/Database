@@ -6,16 +6,8 @@ if(!isset($_SESSION))
 require('connect-db.php');
 require('pokemon_db.php');
 
-#$orderByA = array('natl_dex', 'variance', 'name', 'generaton', 'hp', 'atk', 'spAtk', 'speed', 'def', 'spDef');
 
-#if(isset($_GET["orderBy"]) && in_array($_GET["orderBy"], $orderByA){
-#	$order = $_GET["orderBy"];
-#	$list_of_pokemon = orderBy($order);
-#}
-#else {
-	$list_of_pokemon = $_SESSION["pokemon"];
-#}
-
+$list_of_pokemon = $_SESSION["pokemon"];
 $friend_to_update = null;
 
 $gmail_to_add = 'testuser@gmail.com';
@@ -25,6 +17,8 @@ $variance_to_add = null;
 $gmail_to_delete = null;
 $pokemon_to_delete = null;
 $variance_to_delete = null;
+
+$asc = $_SESSION["asc"];
 
 ?>
 
@@ -82,27 +76,50 @@ $variance_to_delete = null;
   <table id "myTable" class="w3-table w3-bordered w3-card-4" style="width:90%">
     <thead>
     <tr style="background-color:#B0B0B0">
-      <th width="5%"><input type="Submit" name="orderBy" value="natl_dex"/>
-      </th>
-      <th width="10%"><input type="Submit" name="orderBy" value="variance"/>
-      </th>
-      <th width="20%"><input type="Submit" name="orderBy" value="name"/>
-      </th>
-      <th width="5%"><input type="Submit" name="orderBy" value="generation"/>
-      </th>
+      </form>
+      <?php
+      if($_SESSION["last"] == "natl_dex") $asc = $_SESSION["asc"];
+      else $asc = "ASC";
+      ?>
+      <th width='5%'><input type='Submit' name='orderBy' value='natl_dex'/></th>
+      <?php echo "<input type='hidden' name='direction' value= '".$asc."'/>" ?>
+      </form>
+
+
+      <?php
+      if($_SESSION["last"] == "variance") $asc = $_SESSION["asc"];
+      else $asc = "ASC";
+      ?>
+      <form action="?command=pokeList" method="post">
+      <th width='10%'><input type='Submit' name='orderBy' value='variance'/></th>
+      <?php echo "<input type='hidden' name='direction' value= '".$asc."'/>" ?>
+      </form>
+
+
+      <?php
+      if($_SESSION["last"] == "name") $asc = $_SESSION["asc"];
+      else $asc = "ASC";
+      ?>
+      <form action="?command=pokeList" method="post">
+      <th width='20%'><input type='Submit' name='orderBy' value='name'/></th>
+      <?php echo "<input type='hidden' name='direction' value= '".$asc."'/>" ?>
+      </form>
+
+
+      <?php
+      if($_SESSION["last"] == "generation") $asc = $_SESSION["asc"];
+      else $asc = "ASC";
+      ?>
+      <form action="?command=pokeList" method="post">
+      <th width='5%'><input type='Submit' name='orderBy' value='generation'/></th>
+      <?php echo "<input type='hidden' name='direction' value= '".$asc."'/>" ?>
+      </form>
+	
+	
+      <form action="?command=pokeList" method="post">
       <th width="25%">image</th>
-      <th width="8%"><input type="Submit" name="orderBy" value="hp"/>
-      </th>
-      <th width="8%"><input type="Submit" name="orderBy" value="atk"/>
-      </th>
-      <th width="8%"><input type="Submit" name="orderBy" value="spAtk"/>
-      </th>
-      <th width="8%"><input type="Submit" name="orderBy" value="speed"/>
-      </th>
-      <th width="8%"><input type="Submit" name="orderBy" value="def"/>
-      </th>
-      <th width="8%"><input type="Submit" name="orderBy" value="spDef"/>
-      </th>
+      <th width="25%">type 1</th>
+      <th width="25%">type 2</th>	    
     </tr>
     </thead>
 
@@ -114,13 +131,22 @@ $variance_to_delete = null;
     <td><?php echo $pokemon['name']; ?></td>
     <td><?php echo $pokemon['generation']; ?></td>
     <td><?php echo "<img src='".$pokemon['image']."' height='30' >"; ?></td>
-    <td><?php echo $pokemon['hp']; ?></td>
-    <td><?php echo $pokemon['atk']; ?></td>
-    <td><?php echo $pokemon['spAtk']; ?></td>
-    <td><?php echo $pokemon['speed']; ?></td>
-    <td><?php echo $pokemon['def']; ?></td>
-    <td><?php echo $pokemon['spDef']; ?></td>
+    </form>
 
+    <?php
+ 	global $db;
+	$query = 'select * from has where natl_dex=:natl_dex AND variance=:variance';
+	$statement = $db->prepare($query);
+	$statement->bindValue(':natl_dex', $pokemon['natl_dex']);
+    	$statement->bindValue(':variance', $pokemon['variance']);
+	$statement->execute();
+	$results = $statement->fetchAll();
+	$statement->closeCursor(); 
+    ?>
+    <?php foreach ($results as $has): ?>
+    <td><?php echo $has['type']; ?></td>
+    <?php endforeach; ?>
+    <form action="?command=pokeList" method="post">
   </tr>
   <?php endforeach; ?>
 
