@@ -3,7 +3,7 @@
 // { 
 //     session_start(); 
 // }
-var_dump($_SESSION);
+// var_dump($_SESSION);
 include("header.php");
 require('connect-db.php');
 require('pokemon_db.php');
@@ -142,6 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <hr/>
 <h2>List of Pokemon</h2>
 <!-- <div class="row justify-content-center">   -->
+<div style="overflow-y: scroll; height: 500px;">
 <table class="w3-table w3-bordered w3-card-4" style="width:90%">
   <thead>
   <tr style="background-color:#B0B0B0">
@@ -203,6 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 
   </table>
+  </div>
 <!-- </div>   -->
 
 

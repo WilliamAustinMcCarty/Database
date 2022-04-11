@@ -61,7 +61,7 @@ foreach($weak as $w){
         ?> </h2>
         <p> <?=$name?> is weak against <?php
         foreach($weakList as $wt => $w){
-            echo ($w.",");
+            echo ($w.","); //fix later
         }
         ?> moves</p>
         <form action="?command=pokeList" method="post">
