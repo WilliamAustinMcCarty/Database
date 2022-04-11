@@ -215,12 +215,11 @@ function deleteFriend($name)
 }
 
 
-function orderBy($order)
+function orderBy($order, $asc)
 {
 	global $db;
-	$query = 'select * from pokemon ORDER BY '.$order;
 
-
+	$query = 'select * from pokemon ORDER BY '.$order.' '.$asc;
 	$statement = $db->prepare($query);
 	$statement->execute();
 
