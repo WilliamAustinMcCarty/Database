@@ -35,7 +35,7 @@ function deleteTeam($gmail, $natl_dex, $variance)
 {
 	global $db;
 
-    echo "deleting $gmail, $natl_dex, $variance";
+    //echo "deleting $gmail, $natl_dex, $variance";
 
     $query = "delete from chooseteam where (gmail=:gmail and natl_dex=:natl_dex and variance=:variance)";
 	$statement = $db->prepare($query);
@@ -51,7 +51,7 @@ function addTeam($gmail, $natl_dex, $variance)
 	// db handler
 	global $db;
 
-    echo "adding $gmail, $natl_dex, $variance";
+    //echo "adding $gmail, $natl_dex, $variance";
 
 	// write sql
 	// insert into friends (name, major, year) values('someone', 'cs', 4)";
@@ -78,6 +78,53 @@ function addTeam($gmail, $natl_dex, $variance)
 
 	// release; free the connection to the server so other sql statements may be issued
 	$statement->closeCursor();
+}
+
+function vote($gmail, $natl_dex, $variance)
+{
+	// db handler
+	global $db;
+
+    //echo "adding $gmail, $natl_dex, $variance";
+
+	$query = "insert into votesfor values(:gmail, :natl_dex, :variance)";
+
+	// execute the sql
+	// $statement = $db->query($query);   // query() will compile and execute the sql
+	$statement = $db->prepare($query);
+
+	$statement->bindValue(':gmail', $gmail);
+	$statement->bindValue(':natl_dex', $natl_dex);
+	$statement->bindValue(':variance', $variance);
+
+	$statement->execute();
+
+	// release; free the connection to the server so other sql statements may be issued
+	$statement->closeCursor();
+}
+
+function unVote($gmail)
+{
+	global $db;
+
+    $query = "delete from votesfor where gmail=:gmail";
+	$statement = $db->prepare($query);
+	$statement->bindValue(':gmail', $gmail);
+	$statement->execute();
+	$statement->closeCursor();
+}
+
+function getVotes($natl_dex, $variance)
+{
+	global $db;
+    $query = "select count(*) from votesfor where natl_dex=:natl_dex and variance=:variance";
+	$statement = $db->prepare($query);
+	$statement->bindValue(':natl_dex', $natl_dex);
+	$statement->bindValue(':variance', $variance);
+	$statement->execute();
+	$results = $statement->fetch();   
+	$statement->closeCursor();
+	return $results[0];	
 }
 
 function getAllPokemon()

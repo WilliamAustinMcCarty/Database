@@ -1,5 +1,8 @@
 <?php
-session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+}
 include("header.php");
 require('connect-db.php');
 require('pokemon_db.php');
@@ -14,6 +17,9 @@ $friend_to_update = null;
 $pokemon_to_add = null;
 $variance_to_add = null;
 
+$pokemon_to_vote = null;
+$variance_to_vote = null;
+
 $gmail_to_delete = null;
 $pokemon_to_delete = null;
 $variance_to_delete = null;
@@ -23,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "AddTeam")
     {
       if(count($team)>=6){
-        echo"failed to add $gmail_to_add, $_POST[pokemon_to_add], $_POST[variance_to_add]";
+        //echo"failed to add $gmail_to_add, $_POST[pokemon_to_add], $_POST[variance_to_add]";
       }
       else{
         //echo"rightfully attempting to add $gmail_to_add, $_POST[pokemon_to_add], $_POST[variance_to_add]";
@@ -34,9 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete Member")
     {
-      echo"trying to delete from $gmail_to_delete, $pokemon_to_delete, $variance_to_delete \n";
-        echo"$pokemon_to_delete";
+        //echo"trying to delete from $gmail_to_delete, $pokemon_to_delete, $variance_to_delete \n";
+        //echo"$pokemon_to_delete";
         deleteTeam($_POST['gmail_to_delete'], $_POST['pokemon_to_delete'], $_POST['variance_to_delete']);
+        $list_of_pokemon = getAllPokemon();
+        $team = getTeam($gmail_to_add);
+    }
+    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Vote")
+    {
+        unVote($gmail_to_add);
+        vote($gmail_to_add, $_POST['pokemon_to_vote'], $_POST['variance_to_vote']);
         $list_of_pokemon = getAllPokemon();
         $team = getTeam($gmail_to_add);
     }
@@ -119,7 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <tr style="background-color:#B0B0B0">
     <th width="20%">Name</th>
     <th width="10%">Variance</th>
+    <th width="10%">Image</th>
     <th width="12%">Add To Team</th>
+    <th width="5%"><input type="Submit" name="orderBy" value="Votes"/></th>
+    <th width="12%">Vote For</th>
   </tr>
   </thead>
   <?php foreach ($list_of_pokemon as $pokemon): ?>
@@ -127,11 +143,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     <td><?php echo $pokemon['name']; ?></td>
     <td><?php echo $pokemon['variance']; ?></td>
+    <td><?php echo "<img src='".$pokemon['image']."' height='30' >"; ?></td>
     <td>
       <form action="simpleform.php" method="post">
         <input type="submit" value="AddTeam" name="btnAction" class="btn btn-primary" />
         <input type="hidden" name="pokemon_to_add" value="<?php echo $pokemon['natl_dex'] ?>"/>
         <input type="hidden" name="variance_to_add" value="<?php echo $pokemon['variance'] ?>"/>
+      </form>
+    </td>
+    <td>
+      <?php echo getVotes($pokemon['name'], $pokemon['variance']);?>
+    </td>
+    <td>
+      <form action="simpleform.php" method="post">
+        <input type="submit" value="Vote" name="btnAction" class="btn btn-primary" />
+        <input type="hidden" name="pokemon_to_vote" value="<?php echo $pokemon['natl_dex'] ?>"/>
+        <input type="hidden" name="variance_to_vote" value="<?php echo $pokemon['variance'] ?>"/>
       </form>
     </td>
   </tr>
