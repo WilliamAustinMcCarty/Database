@@ -16,6 +16,14 @@
     <!-- <link rel="stylesheet" href="custom.css" />  -->
   </head>
   <body>
+    <?php
+    if($errormsg == "Wrong Password"){
+      ?>
+      <div class="alert alert-danger" role="alert"> Wrong Password </div>
+      <?php
+      }
+      ?>
+
     <div class="container">
       <h1>Welcome! Log In</h1>
       <form action="?command=login" method="post"> <!--?command=login, since there is no URI before the ?, it defaults to index.php (action="index.php?command=login). method="post" will put the information in the $_POST[name] array.-->

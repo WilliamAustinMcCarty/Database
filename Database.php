@@ -20,7 +20,7 @@ class Database{
     public function query($query, string $bparam=null, ...$params){
         $bindarr = explode(":", $bparam);
         $ret = $this->mypdo->prepare($query);
-        echo gettype($bindarr[0]);
+        // echo gettype($bindarr[0]);
         if ($bparam != null){  //defaults null, no params to bind
             $count = 0;
             foreach ($bindarr as $v){

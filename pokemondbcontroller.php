@@ -33,26 +33,24 @@ class pokemondbcontroller{
     }
 
     private function login(){
-        $pw=false;
+        $errormsg = "No error";
         if (isset($_POST["gmail"])){ //user is logging in
             $user = $this->db->query("select * from user where gmail=:gmail;",":gmail",$_POST["gmail"]);
             if (empty($user)){ //New user to log in
                 $insert = $this->db->query("insert into user (gmail, passwd) values(:gmail, :passwd);",":gmail:passwd",$_POST["gmail"], password_hash($_POST["passwd"], PASSWORD_DEFAULT));
                 $_SESSION["gmail"] = $_POST["gmail"];
-                $pw=true;
+                header("Location: ?command=userPage");
             } else { //Re-log old user
                 if (password_verify($_POST["passwd"], $user[0]["passwd"])){ //verifies right password
                     $_SESSION["gmail"] = $_POST["gmail"]; //get username from $_SESSION["gmail];
-                    $pw=true;
+                    header("Location: ?command=userPage");
                 } else { //wrong password
+                    $errormsg = "Wrong Password";
                 }
             }
-            header("Location: ?command=userPage"); //could also read: "Location: index.php?command=userPage
+             //could also read: "Location: index.php?command=userPage
         }
         include("login.php");
-        if(!$pw){
-            echo "<div class=\"alert alert-danger\" role=\"alert\"> Wrong Password </div>";
-        }
     }
 
     private function userPage(){
@@ -60,6 +58,7 @@ class pokemondbcontroller{
     }
 
     private function logOut(){
+        $errormsg = "logout";
         session_destroy(); //all $_SESSION[] variables are unset
         include("login.php");
     }
