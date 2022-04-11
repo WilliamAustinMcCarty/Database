@@ -23,6 +23,13 @@
       <?php
       }
       ?>
+    <?php
+    if($errormsg == "no Username"){
+      ?>
+      <div class="alert alert-info" role="alert"> Enter A Username </div>
+      <?php
+      }
+      ?>
 
     <div class="container">
       <h1>Welcome! Log In</h1>
@@ -30,7 +37,7 @@
         <label for="gmail"> Username: </label><br>
         <input type="text" name="gmail" placeholder="Username"/><br><br>
         <label for="passwd"> Password: </label><br>
-        <input type="passwd" name="passwd" placeholder="Password"/><br><br>
+        <input type="password" name="passwd" placeholder="Password"/><br><br>
         <input type="Submit" value="Submit"/>
       </form>
     </div>

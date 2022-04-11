@@ -17,6 +17,9 @@ class pokemondbcontroller{
 
     public function run(){
         switch($this->cmd){ //use this to trigger commands (from $_GET)
+            case "fullPage":
+                $this->fullPage();
+                break;
             case "userPage":
                 $this->userPage();
                 break;
@@ -37,9 +40,13 @@ class pokemondbcontroller{
         if (isset($_POST["gmail"])){ //user is logging in
             $user = $this->db->query("select * from user where gmail=:gmail;",":gmail",$_POST["gmail"]);
             if (empty($user)){ //New user to log in
-                $insert = $this->db->query("insert into user (gmail, passwd) values(:gmail, :passwd);",":gmail:passwd",$_POST["gmail"], password_hash($_POST["passwd"], PASSWORD_DEFAULT));
-                $_SESSION["gmail"] = $_POST["gmail"];
-                header("Location: ?command=userPage");
+                if (ctype_space($_POST["gmail"]) || empty($_POST["gmail"])){
+                    $errormsg = "no Username";
+                } else {
+                    $insert = $this->db->query("insert into user (gmail, passwd) values(:gmail, :passwd);",":gmail:passwd",$_POST["gmail"], password_hash($_POST["passwd"], PASSWORD_DEFAULT));
+                    $_SESSION["gmail"] = $_POST["gmail"];
+                    header("Location: ?command=userPage");
+                }
             } else { //Re-log old user
                 if (password_verify($_POST["passwd"], $user[0]["passwd"])){ //verifies right password
                     $_SESSION["gmail"] = $_POST["gmail"]; //get username from $_SESSION["gmail];
@@ -82,5 +89,35 @@ class pokemondbcontroller{
 
         include("header.php");
         include("poke.php");
+    }
+
+    private function fullPage(){
+        $info = "Failure to get Pokemon";
+        $natl = "Failure to get natl dex";
+        $var = "Failure to get Varience";
+        if(isset($_POST["fullPokemon"])){
+            $info = explode("|", $_POST["fullPokemon"]);
+            $natl = $info[0];
+            $var = $info[1];
+
+            //egg_grp
+            $egg = $this->db->query("select egg_grp from egg_grp where natl_dex = :natl", ":natl", $natl);
+            //type
+            $type = $this->db->query("select type from has where natl_dex = :natl AND variance = :var", ":natl:var", $natl, $var);
+            //weak against
+            $weak = array();
+            $weakrmv = array();
+            for ($i = 0; $i<count($type); $i++){
+                $weakrmv[$i] = $this->db->query("select weakType from weakagainst where strongType = :type", ":type", $type[$i]["type"]);
+            }
+            for ($i = 0; $i<count($type); $i++){
+                $weak[$i] = $this->db->query("select strongType from strongAgainst where weakType = :type", ":type", $type[$i]["type"]);
+            }            
+            //strong against
+            //isn't affected by
+            //stats / picture /
+            $all = $this->db->query("select * from pokemon where natl_dex = :natl AND variance = :var", ":natl:var", $natl, $var);
+        }
+        include("fullpage.php");
     }
 }

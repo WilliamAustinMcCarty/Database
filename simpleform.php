@@ -1,8 +1,9 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-}
+// if(!isset($_SESSION)) 
+// { 
+//     session_start(); 
+// }
+var_dump($_SESSION);
 include("header.php");
 require('connect-db.php');
 require('pokemon_db.php');

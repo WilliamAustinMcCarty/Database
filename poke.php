@@ -120,7 +120,8 @@ $asc = $_SESSION["asc"];
       <form action="?command=pokeList" method="post">
       <th width="25%">image</th>
       <th width="25%">type 1</th>
-      <th width="25%">type 2</th>	    
+      <th width="25%">type 2</th>
+      </form>	    
     </tr>
     </thead>
 
@@ -128,12 +129,14 @@ $asc = $_SESSION["asc"];
 
   <?php foreach ($list_of_pokemon as $pokemon): ?>
   <tr class ="item">
+    <form action="?command=fullPage" method = "post">
     <td><?php echo $pokemon['natl_dex']; ?></td>
     <td><?php echo $pokemon['variance']; ?></td>
-    <td><?php echo $pokemon['name']; ?></td>
+    <td><input type="submit" value="<?php echo $pokemon['name']; ?>"/></td>
     <td><?php echo $pokemon['generation']; ?></td>
     <td><?php echo "<img src='".$pokemon['image']."' height='30' >"; ?></td>
-    </form>
+    <input type="hidden" name="fullPokemon" value="<?=$pokemon['natl_dex']?>|<?=$pokemon['variance']?>"/>
+
 
     <?php
  	global $db;
@@ -148,12 +151,13 @@ $asc = $_SESSION["asc"];
     <?php foreach ($results as $has): ?>
     <td><?php echo $has['type']; ?></td>
     <?php endforeach; ?>
-    <form action="?command=pokeList" method="post">
+    <!-- <form action="?command=pokeList" method="post"> removed this form for "fullpage" functionality, unsure what it was for?--> 
+    </form>
   </tr>
   <?php endforeach; ?>
     </div>
   </table>
-  </form>
+  <!-- </form> -->
 
 </div>
 </body>
