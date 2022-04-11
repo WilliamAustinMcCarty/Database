@@ -53,6 +53,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $list_of_pokemon = getAllPokemon();
         $team = getTeam($gmail_to_add);
     }
+    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "name")
+    {
+        $list_of_pokemon = orderBy('name', $_SESSION["asc"]);
+
+        $_SESSION["asc"] = ($_SESSION["asc"] == 'DESC') ? 'ASC': 'DESC';
+        $_SESSION["last"] = 'name';
+    }
+    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "variance")
+    {
+        $list_of_pokemon = orderBy('variance', $_SESSION["asc"]);
+
+        $_SESSION["asc"] = ($_SESSION["asc"] == 'DESC') ? 'ASC': 'DESC';
+        $_SESSION["last"] = 'variance';
+    }
 }
 ?>
 
@@ -130,8 +144,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <table class="w3-table w3-bordered w3-card-4" style="width:90%">
   <thead>
   <tr style="background-color:#B0B0B0">
-    <th width="20%">Name</th>
-    <th width="10%">Variance</th>
+      <?php
+      if($_SESSION["last"] == "name") $asc = $_SESSION["asc"];
+      else $asc = "ASC";
+      ?>
+
+      <form action="simpleform.php" method="post">
+      <th width='20%'>
+      <input type="submit" value="name" name="btnAction" class="btn btn-danger" />
+      <input type="hidden" name="asc" value="<?php echo ".$asc." ?>"/>
+      </th>
+      </form>
+
+      <?php
+      if($_SESSION["last"] == "variance") $asc = $_SESSION["asc"];
+      else $asc = "ASC";
+      ?>
+
+      <form action="simpleform.php" method="post">
+      <th width='10%'>
+      <input type="submit" value="variance" name="btnAction" class="btn btn-danger" />
+      <input type="hidden" name="asc" value="<?php echo ".$asc." ?>"/>
+      </th>
+      </form>
+      
     <th width="10%">Image</th>
     <th width="12%">Add To Team</th>
     <th width="5%"><input type="Submit" name="orderBy" value="Votes"/></th>
