@@ -69,8 +69,18 @@ class pokemondbcontroller{
         if(isset($_POST["orderBy"])){
             $order=$_POST["orderBy"];
         }
-        $pokemon = $this->db->query("select * from pokemon order by ".$order);
+
+        $asc = 'ASC';
+        if(isset($_POST["direction"])){
+            $asc=$_POST["direction"];
+        }
+
+        $pokemon = $this->db->query("select * from pokemon order by ".$order." ".$asc);
+
         $_SESSION["pokemon"] = $pokemon;
+        $_SESSION["asc"] = ($asc == 'DESC') ? 'ASC': 'DESC';
+        $_SESSION["last"] = $order;
+
         include("header.php");
         include("poke.php");
     }
