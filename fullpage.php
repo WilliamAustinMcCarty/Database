@@ -1,9 +1,16 @@
 <?php
-// var_dump($weak);
+// var_dump($egg);
 // var_dump ($all[0]);
 $name = $all[0]["name"];
 $variance = $all[0]["variance"];
 $img = $all[0]["image"];
+
+$egg1 = $egg[0]["egg_grp"];
+$egg2="";
+if(isset($egg[1]["egg_grp"])){
+    $egg2 = $egg[1]["egg_grp"];
+}
+
 $type1 = $type[0]["type"];
 $type2 = "";
 if(isset($type[1]["type"])){
@@ -52,13 +59,19 @@ foreach($weak as $w){
     <body>
         <h1> <?=$name?> (<?=$variance?>)</h1>
         <img src="<?=$img?>" style="width: 300px;"/>
-        <h2> <?=$type1?>
+        <h2> Type(s): <?=$type1?>
         <?php
             if (!empty($type2)){?>
             | <?=$type2?>
         <?php
         }
         ?> </h2>
+        <h3> Egg group(s): <?=$egg1?> <?php
+            if(!empty($egg2)){?>
+                | <?=$egg2?>
+           <?php }
+        ?>
+        </h3>
         <p> <?=$name?> is weak against <?php
         foreach($weakList as $wt => $w){
             echo ($w.","); //fix later
