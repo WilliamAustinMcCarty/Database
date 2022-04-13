@@ -67,6 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $_SESSION["asc"] = ($_SESSION["asc"] == 'DESC') ? 'ASC': 'DESC';
         $_SESSION["last"] = 'variance';
     }
+    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Votes Count")
+    {
+        $list_of_pokemon = orderVotes($_SESSION["asc"]);
+
+        $_SESSION["asc"] = ($_SESSION["asc"] == 'DESC') ? 'ASC': 'DESC';
+        $_SESSION["last"] = 'name';
+    }
 }
 ?>
 
@@ -161,7 +168,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       if($_SESSION["last"] == "variance") $asc = $_SESSION["asc"];
       else $asc = "ASC";
       ?>
-
       <form action="simpleform.php" method="post">
       <th width='10%'>
       <input type="submit" value="variance" name="btnAction" class="btn btn-danger" />
@@ -171,7 +177,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       
     <th width="10%">Image</th>
     <th width="12%">Add To Team</th>
-    <th width="5%"><input type="Submit" name="orderBy" value="Votes"/></th>
+
+    <?php
+    if($_SESSION["last"] == "Votes Count") $asc = $_SESSION["asc"];
+    else $asc = "ASC";
+    ?>
+    <form action="simpleform.php" method="post">
+    <th width='10%'>
+    <input type="submit" value="Votes Count" name="btnAction" class="btn btn-danger" />
+    <input type="hidden" name="asc" value="<?php echo ".$asc." ?>"/>
+    </th>
+    </form>
+    
     <th width="12%">Vote For</th>
   </tr>
   </thead>

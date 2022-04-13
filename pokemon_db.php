@@ -230,4 +230,18 @@ function orderBy($order, $asc)
 	return $results;
 }
 
+
+function orderVotes($asc){
+	global $db;
+
+	$query = 'select * from pokemon NATURAL JOIN votesfor GROUP BY pokemon.natl_dex ORDER BY COUNT(votesfor.gmail)'.$asc;
+	$statement = $db->prepare($query);
+	$statement->execute();
+
+	$results = $statement->fetchAll();
+	$statement->closeCursor();
+
+	return $results;
+}
+
 ?>
