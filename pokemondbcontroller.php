@@ -100,6 +100,15 @@ class pokemondbcontroller{
             $natl = $info[0];
             $var = $info[1];
 
+            $evo = $this->db->query("select natl_dex2, variance2 from evolveFrom where natl_dex = :natl and variance = :var", ":natl:var", $natl, $var);
+
+
+            if(!empty($evo)){
+                $evodex = $evo[0]["natl_dex2"];
+                $evovar = $evo[0]["variance2"];
+                $evoname = $this->db->query("select name from pokemon where natl_dex= :natl and variance= :var", ":natl:var", $evodex, $evovar);
+            }
+
             //egg_grp
             $egg = $this->db->query("select egg_grp from egg_grp where natl_dex = :natl", ":natl", $natl);
             //type
@@ -115,8 +124,13 @@ class pokemondbcontroller{
             }            
             //strong against
             //isn't affected by
+            for ($i = 0; $i<count($type); $i++){
+                $noEffect[$i] = $this->db->query("select attackingType from noeffect where unaffectedType = :type", ":type", $type[$i]["type"]);
+            }
             //stats / picture /
             $all = $this->db->query("select * from pokemon where natl_dex = :natl AND variance = :var", ":natl:var", $natl, $var);
+
+            //evofrom link
         }
         include("fullpage.php");
     }

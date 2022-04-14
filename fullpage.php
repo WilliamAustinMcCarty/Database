@@ -1,9 +1,20 @@
 <?php
 // var_dump($egg);
-// var_dump ($all[0]);
+// var_dump ($noEffect);
+// var_dump ($type);
+// var_dump($evodex);
 $name = $all[0]["name"];
 $variance = $all[0]["variance"];
 $img = $all[0]["image"];
+
+$atk= $all[0]["atk"];
+$spAtk= $all[0]["spAtk"];
+$def= $all[0]["def"];
+$spDef= $all[0]["spDef"];
+$hp= $all[0]["hp"];
+$speed= $all[0]["speed"];
+$total=0;
+$total = $atk + $spAtk + $def + $spDef + $hp + $speed;
 
 $egg1 = $egg[0]["egg_grp"];
 $egg2="";
@@ -58,7 +69,31 @@ foreach($weak as $w){
     </head>
     <body>
         <h1> <?=$name?> (<?=$variance?>)</h1>
-        <img src="<?=$img?>" style="width: 300px;"/>
+        <table >
+            <tr>
+                <td><img src="<?=$img?>" style="width: 300px;"/></td>
+                <td><table class="table">
+                    <tr>
+                        <th> HP </th>
+                        <th> Atk </th>
+                        <th> Def </th>
+                        <th> SpAtk </th>
+                        <th> SpDef </th>
+                        <th> Speed </th>
+                        <th> Total </th>
+                    </tr>
+                    <tr>
+                        <td> <?=$hp?> </td>
+                        <td> <?=$atk?> </td>
+                        <td> <?=$def?> </td>
+                        <td> <?=$spAtk?> </td>
+                        <td> <?=$spDef?> </td>
+                        <td> <?=$speed?> </td>
+                        <td> <?=$total?> </td>
+                    </tr>
+                </table></td>
+            </tr>
+        </table>
         <h2> Type(s): <?=$type1?>
         <?php
             if (!empty($type2)){?>
@@ -72,11 +107,29 @@ foreach($weak as $w){
            <?php }
         ?>
         </h3>
-        <p> <?=$name?> is weak against <?php
+        <p> Weaknesses: <?php
         foreach($weakList as $wt => $w){
-            echo ($w.","); //fix later
+            echo ("<button class='btn btn-sm btn-dark' style='margin: 3px;' disabled>".$w."</button>"); //fix later
         }
-        ?> moves</p>
+        ?><?php if(!empty($noEffect[0])or!empty($noEffect[1])){ ?><br> Not Effected By: <?php
+            foreach($noEffect as $w){
+                foreach($w as $n){
+                    echo ("<button class='btn btn-sm btn-dark' style='margin: 3px;' disabled>".$n["attackingType"]."</button>"); //fix later
+                }
+            }
+        }
+        ?>
+        </p>
+        <?php
+            if (!empty($evodex)){
+        ?>
+        <form action="?command=fullPage" method = "post">
+            <input type="submit" value="<?=$name?> evolves from <?=$evoname[0]["name"]?>"/>
+            <input type="hidden" name="fullPokemon" value="<?=$evodex?>|<?=$evovar?>"/>
+        </form>
+        <?php
+            }
+        ?>
         <form action="?command=pokeList" method="post">
             <input type="submit" value="See Pokémon List!"/>
         </form>
