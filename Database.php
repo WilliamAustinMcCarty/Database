@@ -5,6 +5,14 @@ class Database{
 
     //Including these directly is a security issue.
     //We can modify them to be in a Config file if we want
+
+    // //server deployment
+    // private $username = 'hk2s';
+    // private $password = '[secret]';
+    // private $host = 'localhost';
+    // private $dbname = 'hk2s';
+
+    //local deployment
     private $username = 'root';
     private $password = '';
     private $host = 'localhost:3306';

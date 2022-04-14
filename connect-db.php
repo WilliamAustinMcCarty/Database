@@ -29,6 +29,16 @@
 ////////////////////////////////////////////
 
 /** S22, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on local XAMPP) **/
+
+// // server deployment
+// $username = 'hk2s';
+// $password = '[secret]';
+// $host = 'localhost';
+// $dbname = 'hk2s';
+// $dsn = "mysql:host=$host;dbname=$dbname"; 
+
+
+// local deployment
 $username = 'root';
 $password = '';
 $host = 'localhost:3306';
