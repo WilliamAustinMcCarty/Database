@@ -1,3 +1,11 @@
+<?php
+$_SESSION["last"] = "name";
+$_SESSION["asc"] = "ASC";
+$asc = null;
+$last = null;
+?>
+
+
 <!DOCTYPE html>
 <html>
   <head>
