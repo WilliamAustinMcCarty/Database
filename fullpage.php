@@ -14,6 +14,8 @@ $spDef= $all[0]["spDef"];
 $hp= $all[0]["hp"];
 $speed= $all[0]["speed"];
 $total=0;
+
+//We would have liked calculating stat total to be one of our ADV SQL commands, but since the trigger never runs despite being in our database, we have calculated it here.
 $total = $atk + $spAtk + $def + $spDef + $hp + $speed;
 
 $egg1 = $egg[0]["egg_grp"];
