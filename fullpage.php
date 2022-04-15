@@ -1,5 +1,5 @@
 <?php
-// var_dump($egg);
+// var_dump($weak);
 // var_dump ($noEffect);
 // var_dump ($type);
 // var_dump($evodex);
@@ -47,8 +47,17 @@ foreach($weak as $w){
                 }
             }
         }
+        foreach($noEffect as $noE){
+            foreach($noE as $e){
+                if ($wt["strongType"] === $e["attackingType"]){
+                    unset($weakList[$e["attackingType"]]);
+                }
+            }
+        }
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html>

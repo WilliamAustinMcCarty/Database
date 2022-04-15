@@ -32,7 +32,7 @@
 
 // // server deployment
 // $username = 'hk2s';
-// $password = '[secret]';
+// $password = 'HkQBdoMx2h75';
 // $host = 'localhost';
 // $dbname = 'hk2s';
 // $dsn = "mysql:host=$host;dbname=$dbname"; 

@@ -120,7 +120,7 @@ class pokemondbcontroller{
                 $weakrmv[$i] = $this->db->query("select weakType from weakagainst where strongType = :type", ":type", $type[$i]["type"]);
             }
             for ($i = 0; $i<count($type); $i++){
-                $weak[$i] = $this->db->query("select strongType from strongAgainst where weakType = :type", ":type", $type[$i]["type"]);
+                $weak[$i] = $this->db->query("select strongType from strongagainst where weakType = :type", ":type", $type[$i]["type"]);
             }            
             //strong against
             //isn't affected by

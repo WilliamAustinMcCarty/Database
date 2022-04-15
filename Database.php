@@ -8,7 +8,7 @@ class Database{
 
     // //server deployment
     // private $username = 'hk2s';
-    // private $password = '[secret]';
+    // private $password = 'HkQBdoMx2h75';
     // private $host = 'localhost';
     // private $dbname = 'hk2s';
 
