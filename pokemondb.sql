@@ -5022,6 +5022,10 @@ ALTER TABLE `votesfor`
   ADD PRIMARY KEY (`gmail`,`natl_dex`,`variance`),
   ADD KEY `fk_Pokemon_vote` (`natl_dex`,`variance`);
 
+
+ALTER TABLE `votesFor` ADD CONSTRAINT newVote CHECK (natl_dex >= 1 AND natl_dex <= 905);
+
+
 --
 -- Indexes for table `weakagainst`
 --
